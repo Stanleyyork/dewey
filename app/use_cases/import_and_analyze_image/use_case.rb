@@ -68,7 +68,8 @@ module ImportAndAnalyzeImage
 				ia = ImageAnalysisText.where("description LIKE ?", "%#{query.split(" ").first}%").first
 				result = GoogleBooks.search(query, {:api_key => ENV['GOOGLE_API_KEY']})
 				book = result.first
-				puts result if book.nil?
+				puts result.inspect if book.nil?
+				next if book.nil?
 				Book.create({
 					query: query,
 					image_analysis_id: image_analysis.id,

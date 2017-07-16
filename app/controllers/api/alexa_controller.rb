@@ -9,7 +9,7 @@ class Api::AlexaController < ApplicationController
 		if book.nil?
 			render json: {response: "Sorry, I can't find that book"}
 		else
-			render json: {response: "#{book.title} book is at #{relative_place} (#{book.x}, #{book.y}, #{grid.image_link})"}
+			render json: {response: "#{book.title} is near the #{relative_place} of the bookshelf"}
 		end
 	end
 

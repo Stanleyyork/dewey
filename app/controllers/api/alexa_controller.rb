@@ -2,7 +2,9 @@ class Api::AlexaController < ApplicationController
 	def show
 		title = params[:book_title]
 		@book = Book.find_by_title(title)
-		@book = Book.where("title LIKE ?", "%#{title}%").first
+		@book = Book.where("title LIKE ?", "%#{title}%").first if @book.empty?
+		@book = Book.where("title LIKE ?", "%#{title.capitalize}%").first if @book.empty?
+		@book = Book.where("title LIKE ?", "%#{title.split(" ").map{|x| x.capitalize}.join(" ")}%").first if @book.empty?
 		@grid = ImageAnalysis.find_by_id(book.image_analysis_id) unless @book.nil?
 		if book.nil?
 			render json: {response: "Sorry, I can't find that book"}

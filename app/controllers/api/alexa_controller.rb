@@ -9,7 +9,7 @@ class Api::AlexaController < ApplicationController
 		if book.nil?
 			render json: {response: "Sorry, I can't find that book"}
 		else
-			render json: {response: "#{book.title} is near the #{relative_place} of the bookshelf"}
+			render json: {response: "#{book.title} is near the #{relative_place}"}
 		end
 	end
 
@@ -22,17 +22,17 @@ class Api::AlexaController < ApplicationController
 		location = ""
 		y_min = grid.y2
 		y_max = grid.y3
-		y_mid = (y_max - y_min)/2.0
-		y_q3 = y_mid + ((y_max - y_mid)/2.0)
-		y_q1 = y_mid - ((y_mid - y_min)/2.0)
-		if book_y < y_q3 && book_y > y_mid
-			location += "middle "
-		elsif book_y > y_q1 && book_y < y_mid
-			location += "middle "
-		elsif book_y < y_mid
-			location +=  "upper "
+		y_first_third = y_min + ((y_max - y_min)/3)
+		y_second_third = y_max - ((y_max - y_min)/3)
+		# y_mid = (y_max - y_min)/2.0
+		# y_q3 = y_mid + ((y_max - y_mid)/2.0)
+		# y_q1 = y_mid - ((y_mid - y_min)/2.0)
+		if book_y < y_second_third && book_y > y_first_third
+			location += "middle shelf "
+		elsif book_y < y_first_third
+			location +=  "top shelf "
 		else
-			location += "bottom "
+			location += "bottom shelf "
 		end
 
 		x_min = grid.x1
@@ -40,14 +40,14 @@ class Api::AlexaController < ApplicationController
 		x_mid = (x_max - x_min)/2.0
 		x_q3 = x_mid + ((x_max - x_mid)/2.0)
 		x_q1 = x_mid - ((x_mid - x_min)/2.0)
-		if book_x < x_q3 && book_x > x_mid
-			location += "middle"
+		if book_x < x_mid && book_x > x_q1
+			location += "slightly to the left"
 		elsif book_x > x_q1 && book_x < x_mid
-			location += "middle"
-		elsif book_x < x_mid
-			location +=  "left"
-		else
-			location += "right"
+			location += "slightly to the right"
+		elsif book_x < x_q1
+			location +=  "on the far left"
+		elsif book_x > x_q3
+			location += "on the far right"
 		end
 	end
 end

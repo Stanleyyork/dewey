@@ -11,22 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170715214836) do
+ActiveRecord::Schema.define(version: 20170716173046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "books", force: true do |t|
-    t.string   "title"
-    t.string   "authors"
+    t.text     "title"
+    t.text     "authors"
     t.text     "description"
     t.integer  "page_count"
-    t.string   "thumbnail"
+    t.text     "thumbnail"
     t.integer  "x"
     t.integer  "y"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "query"
+    t.text     "query"
     t.integer  "image_analysis_id"
   end
 

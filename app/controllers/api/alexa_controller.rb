@@ -41,9 +41,9 @@ class Api::AlexaController < ApplicationController
 		x_q3 = x_mid + ((x_max - x_mid)/2.0)
 		x_q1 = x_mid - ((x_mid - x_min)/2.0)
 		if book_x < x_q3 && book_x > x_mid
-			location += "middle "
+			location += "middle"
 		elsif book_x > x_q1 && book_x < x_mid
-			location += "middle "
+			location += "middle"
 		elsif book_x < x_mid
 			location +=  "left"
 		else
